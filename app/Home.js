@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity, Image, Alert, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-import Icon from 'react-native-vector-icons/MaterialIcons'; // Importing Material Icons
-import { useFocusEffect } from '@react-navigation/native'; // Import useFocusEffect
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useFocusEffect } from '@react-navigation/native';
 export default function HomeScreen() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState('');
@@ -27,7 +26,7 @@ export default function HomeScreen() {
   // Handle logout functionality
   const handleLogout = async () => {
     await AsyncStorage.removeItem('userToken');
-    router.replace('/login');
+    router.replace('/');
   };
 
   // Filter products based on search text
@@ -92,14 +91,14 @@ export default function HomeScreen() {
       <FlatList
         data={filteredProducts}
         renderItem={renderProduct}
-        keyExtractor={(item) => item.id.toString()} // Ensure keyExtractor is working properly
+        keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.productList}
       />
 
       {/* Floating Add Product Button */}
       <TouchableOpacity
         style={styles.addButton}
-        onPress={() => router.push('/home/add-product')}
+        onPress={() => router.push('AddProduct')}
       >
         <Icon name="add" size={30} color="#fff" />
       </TouchableOpacity>
@@ -123,10 +122,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     fontSize: 16,
     color: '#333',
-    width: '80%', // Take most of the width for the search bar
+    width: '80%',
   },
   logoutButton: {
-    backgroundColor: '#4CAF50', // Green color
+    backgroundColor: '#4CAF50',
     paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 8,
@@ -153,7 +152,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 10,
     elevation: 8,
-    position: 'relative', // To position the delete button inside the card
+    position: 'relative', 
   },
   productImage: {
     width: 80,
@@ -179,26 +178,26 @@ const styles = StyleSheet.create({
     marginVertical: 8,
   },
   deleteButton: {
-    position: 'absolute', // Positioning it inside the card
-    top: '50%', // Vertically centering it
-    right: 8, // Keeping it on the right
+    position: 'absolute',
+    top: '50%',
+    right: 8,
     backgroundColor: '#e74c3c',
     padding: 8,
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 1, // Ensures it stays on top of other elements
-    transform: [{ translateY: -25 }], // Adjusting to perfectly center vertically
+    zIndex: 1,
+    transform: [{ translateY: -25 }],
   },
   
   addButton: {
-    position: 'absolute', // Positioning it at the bottom right
+    position: 'absolute',
     bottom: 16,
     right: 16,
-    backgroundColor: '#4CAF50', // Green color for Add Product button
+    backgroundColor: '#4CAF50',
     width: 50,
     height: 50,
-    borderRadius: 30, // Full circle
+    borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#4CAF50',
