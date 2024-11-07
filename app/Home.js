@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TextInput, TouchableOpacity, Image, Alert, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
@@ -8,6 +8,25 @@ export default function HomeScreen() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState('');
   const router = useRouter();
+
+  const searchTheProductByName = async() => {
+    if(products?.length > 0){
+        if(search?.length === 0){
+            const storedProducts = await AsyncStorage.getItem('products');
+            const parsedProducts = storedProducts ? JSON.parse(storedProducts) : [];
+            setProducts(parsedProducts);
+        }else{
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(search.toLowerCase())
+              );
+              setProducts(filteredProducts);
+        }
+    }
+  }
+
+  useEffect(() => {
+    searchTheProductByName();
+  },[search]);
 
   // Fetch products from AsyncStorage
   const fetchProducts = async () => {

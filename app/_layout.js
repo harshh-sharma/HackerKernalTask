@@ -8,7 +8,7 @@ export default function Layout() {
         <Stack
             screenOptions={{
               // Hide the header for all other routes.
-              headerShown: false,
+              headerShown: true,
             }}
           >
             <Stack.Screen
